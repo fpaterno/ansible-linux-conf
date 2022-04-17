@@ -1,0 +1,15 @@
+- name: Global Linux configuration
+  hosts: all
+
+  vars_files:
+    - default.config.yml
+
+  pre_tasks:
+    - name: Verify Ansible meets setup version requirements.
+      assert:
+        that: "ansible_version.full is version_compare('2.8', '>=')"
+        msg: "You must update Ansible to at least 2.8 to use this setup."
+
+  tasks:
+    - import_tasks: tasks/git_config.yml
+      tags: ['git']

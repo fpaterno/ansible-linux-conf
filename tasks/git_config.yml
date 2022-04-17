@@ -1,0 +1,21 @@
+- name: Install git
+  become: yes
+  package:
+    name: git
+    state: present
+
+- name: Configure git
+  git_config:
+    name: "{{ item.name }}"
+    value: " {{ item.value }}"
+    scope: global
+  with_items:
+    - { name: "user.name", value: "{{ git_fullname }}" }
+    - { name: "user.email", value: "{{ git_email }}" }
+    - { name: "core.editor", value: "{{ git_editor }}" }
+    - { name: "pager.branch", value: "false" }
+    - { name: "alias.st", value: "status" }
+    - { name: "alias.co", value: "checkout" }
+    - { name: "alias.rpo", value: "remote prune origin" }
+    - { name: "alias.rpot", value: "fetch --prune origin +refs/tags/*:refs/tags/*" }
+    - { name: "alias.pfl", value: "push --force-with-lease" }
