@@ -1,0 +1,9 @@
+- name: Create ~/.ssh directory
+  file:
+    path: "{{ ssh_dir }}"
+    state: directory
+    mode: 0700
+
+- name: Generate ssh private and public keys
+  openssh_keypair:
+    path: "{{ ssh_dir }}/id_rsa"

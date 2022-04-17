@@ -2,3 +2,5 @@
 git_fullname: ""
 git_email: ""
 git_editor: "vim"
+
+ssh_dir: ~/.ssh/
