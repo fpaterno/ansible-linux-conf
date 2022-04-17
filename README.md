@@ -8,6 +8,7 @@ First, install [Ansible](https://www.ansible.com/) (minimum 2.8) and required ro
 
 ```shell
 $ sudo apt install ansible
+$ make install-dependencies
 ```
 
 Next, configure vars declared into `default.config.yml` file. Then, find which task to run :

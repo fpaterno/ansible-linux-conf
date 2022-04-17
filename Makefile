@@ -6,16 +6,22 @@ help:
 	@echo "Please report any bug or error to the author\n"
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
 
+install-dependencies: ##@Prerequisite Install required Ansible roles
+	ansible-galaxy install -r requirements.yml
+
 global-setup: ##@Setup Execute all tasks
 	ansible-playbook playbook.yml --ask-become-pass
 
 setup-git: ##@Setup Install & configure git
 	ansible-playbook playbook.yml --ask-become-pass --tags git
 
+setup-vim: ##@Setup Install & configure vim
+	ansible-playbook playbook.yml --ask-become-pass --tags vim
+
 setup-ssh: ##@Setup Generate ssh key
 	ansible-playbook playbook.yml --ask-become-pass --tags ssh
 
-.PHONY: global-setup setup-git setup-ssh
+.PHONY: install-dependencies global-setup setup-git setup-vim setup-ssh
 
 HELP_FUN = \
     %help; while(<>){push@{$$help{$$2//'options'}},[$$1,$$3] \

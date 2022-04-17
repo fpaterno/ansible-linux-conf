@@ -1,0 +1,5 @@
+---
+- name: fpaterno.vim
+  src: https://github.com/fpaterno/ansible-role-vim.git
+  version: main
+  scm: git

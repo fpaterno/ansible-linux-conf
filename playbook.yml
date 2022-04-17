@@ -16,3 +16,7 @@
 
     - import_tasks: tasks/git_config.yml
       tags: ['git']
+
+  roles:
+    - role: fpaterno.vim
+      tags: ['vim']
