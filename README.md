@@ -1,8 +1,12 @@
-# Linux configuration
+Linux configuration
+===================
+
+[![Continuous Integration](https://github.com/fpaterno/ansible-linux-conf/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fpaterno/ansible-linux-conf/actions/workflows/ci.yml)
 
 This repository is a tool to automatically configure new Linux installation.
 
-## Installation
+Installation
+------------
 
 First, install [Ansible](https://www.ansible.com/) (minimum 2.8) and required roles:
 
@@ -21,8 +25,12 @@ $ make
 
 Enter your Linux account password when prompted for the 'BECOME' password.
 
-# Extra configuration
-## Gnome-terminal color
+Extra configuration
+===================
+
+Gnome-terminal color
+--------------------
+
 Install Flat theme by launching Gogh color :
 
 ```shell
@@ -31,7 +39,9 @@ $ bash -c  "$(wget -qO- https://git.io/vQgMr)"
 
 Chosse "Flat" theme and select this theme into Gnome-terminal preference.
 
-# Gnome
+Gnome
+-----
+
 Interesting Gnome Shell extensions :
 - User theme to choose Gnome Shell theme
 - openweather to display weather
