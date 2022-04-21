@@ -22,6 +22,9 @@
     - import_tasks: tasks/git_config.yml
       tags: ['git']
 
+    - import_tasks: tasks/google_chrome.yml
+      tags: ['chrome']
+
   roles:
     - role: fpaterno.vim
       tags: ['vim']

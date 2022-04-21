@@ -12,6 +12,9 @@ install-dependencies: ##@Prerequisite Install required Ansible roles
 global-setup: ##@Setup Execute all tasks
 	ansible-playbook playbook.yml --ask-become-pass
 
+setup-ssh: ##@Setup Generate ssh key
+	ansible-playbook playbook.yml --ask-become-pass --tags ssh
+
 setup-git: ##@Setup Install & configure git
 	ansible-playbook playbook.yml --ask-become-pass --tags git
 
@@ -21,10 +24,10 @@ setup-vim: ##@Setup Install & configure vim
 setup-zsh: ##@Setup Install & configure zsh
 	ansible-playbook playbook.yml --ask-become-pass --tags zsh
 
-setup-ssh: ##@Setup Generate ssh key
-	ansible-playbook playbook.yml --ask-become-pass --tags ssh
+setup-chrome: ##@Setup Install & configure Chrome
+	ansible-playbook playbook.yml --ask-become-pass --tags chrome
 
-.PHONY: install-dependencies global-setup setup-git setup-vim setup-zsh setup-ssh
+.PHONY: install-dependencies global-setup setup-ssh setup-git setup-vim setup-zsh setup-chrome
 
 HELP_FUN = \
     %help; while(<>){push@{$$help{$$2//'options'}},[$$1,$$3] \
