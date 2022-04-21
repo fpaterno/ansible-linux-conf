@@ -1,0 +1,26 @@
+---
+- name: Install powerlebel10k theme
+  ansible.builtin.git:
+    repo: https://github.com/romkatv/powerlevel10k.git
+    dest: "{{ omz_custom_dir }}/themes/powerlevel10k"
+    depth: 1
+    version: master
+
+- name: Activate theme into .zshrc file
+  ansible.builtin.lineinfile:
+    path: "{{ zshrc_file }}"
+    regexp: ^ZSH_THEME=
+    line: ZSH_THEME="powerlevel10k/powerlevel10k"
+
+- name: Copy powerlevel10k configuration
+  ansible.builtin.copy:
+    src: p10k.zsh
+    dest: '{{ p10k_file }}'
+    mode: 0644
+
+- name: Plug configuration into .zshrc file
+  ansible.builtin.blockinfile:
+    path: "{{ zshrc_file }}"
+    marker: "# {mark} Powerlevel10k configuration"
+    block: |
+      [[ -f {{ p10k_file }} ]] && source {{ p10k_file }}

@@ -1,0 +1,6 @@
+---
+zshrc_file: ~/.zshrc
+omz_dir: "~/.oh-my-zsh"
+omz_custom_dir: "{{ omz_dir }}/custom"
+powerlevel10k_theme_path: "{{ omz_custom_dir }}/themes/powerlevel10k.zsh"
+p10k_file: "~/.p10k.zsh"

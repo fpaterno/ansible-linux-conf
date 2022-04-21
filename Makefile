@@ -18,10 +18,13 @@ setup-git: ##@Setup Install & configure git
 setup-vim: ##@Setup Install & configure vim
 	ansible-playbook playbook.yml --ask-become-pass --tags vim
 
+setup-zsh: ##@Setup Install & configure zsh
+	ansible-playbook playbook.yml --ask-become-pass --tags zsh
+
 setup-ssh: ##@Setup Generate ssh key
 	ansible-playbook playbook.yml --ask-become-pass --tags ssh
 
-.PHONY: install-dependencies global-setup setup-git setup-vim setup-ssh
+.PHONY: install-dependencies global-setup setup-git setup-vim setup-zsh setup-ssh
 
 HELP_FUN = \
     %help; while(<>){push@{$$help{$$2//'options'}},[$$1,$$3] \
