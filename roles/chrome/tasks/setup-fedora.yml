@@ -1,0 +1,9 @@
+---
+- name: Install Third Party Repositories
+  become: yes
+  dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - fedora-workstation-repositories
+    - dnf-plugin-config-manager

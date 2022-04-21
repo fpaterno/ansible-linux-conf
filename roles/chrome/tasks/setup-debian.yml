@@ -11,9 +11,3 @@
   become: yes
   apt_key:
     url: https://dl-ssl.google.com/linux/linux_signing_key.pub
-
-- name: Install Google Chrome
-  become: yes
-  apt:
-    name: google-chrome-stable
-    state: present

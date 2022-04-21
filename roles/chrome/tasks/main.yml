@@ -1,0 +1,12 @@
+---
+- import_tasks: setup-debian.yml
+  when: ansible_os_family == "Debian"
+
+- import_tasks: setup-fedora.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Install Google Chrome
+  become: yes
+  package:
+    name: google-chrome-stable
+    state: present
