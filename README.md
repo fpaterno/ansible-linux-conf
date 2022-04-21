@@ -1,12 +1,10 @@
-Linux configuration
-===================
+# Linux configuration
 
 [![Continuous Integration](https://github.com/fpaterno/ansible-linux-conf/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fpaterno/ansible-linux-conf/actions/workflows/ci.yml)
 
-This repository is a tool to automatically configure new Linux installation.
+This repository includes a tool to automatically install and configure most of the software I use on my Linux installation.
 
-Installation
-------------
+## Installation
 
 First, install [Ansible](https://www.ansible.com/) (minimum 2.8) and required roles:
 
@@ -25,11 +23,18 @@ $ make
 
 Enter your Linux account password when prompted for the 'BECOME' password.
 
-Extra configuration
-===================
+## Included applications & configuration
 
-Gnome-terminal color
---------------------
+This installation has been created to run on Debian (Ubuntu) and it includes:
+- [Vim](https://www.vim.org/)
+- [Zsh](https://www.zsh.org/) with [Oh my Zsh](https://ohmyz.sh/) framework
+- [Google Chrome](https://www.google.com/intl/fr_fr/chrome/)
+- [Git](https://git-scm.com/) and custom aliases / configuration
+- [OpenSSH](https://www.openssh.com/) private and public keys generation
+
+## Extra configuration
+
+### Gnome-terminal color
 
 Install Flat theme by launching Gogh color :
 
@@ -39,8 +44,7 @@ $ bash -c  "$(wget -qO- https://git.io/vQgMr)"
 
 Chosse "Flat" theme and select this theme into Gnome-terminal preference.
 
-Gnome
------
+### Gnome
 
 Interesting Gnome Shell extensions :
 - User theme to choose Gnome Shell theme
