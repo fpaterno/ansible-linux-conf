@@ -6,7 +6,7 @@
   when: ansible_os_family == "RedHat"
 
 - name: Install Google Chrome
-  become: yes
-  package:
+  become: true
+  ansible.builtin.package:
     name: google-chrome-stable
     state: present

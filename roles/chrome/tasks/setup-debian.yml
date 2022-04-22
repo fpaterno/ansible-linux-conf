@@ -1,13 +1,13 @@
 ---
 - name: Add Google Chrome repository
-  become: yes
-  blockinfile:
+  become: true
+  ansible.builtin.blockinfile:
     path: /etc/apt/sources.list
     marker: "# {mark} Google Chrome repository"
     block: |
       deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main
 
 - name: Add Google Chrome key
-  become: yes
-  apt_key:
+  become: true
+  ansible.builtin.apt_key:
     url: https://dl-ssl.google.com/linux/linux_signing_key.pub

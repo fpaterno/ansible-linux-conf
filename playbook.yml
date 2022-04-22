@@ -11,7 +11,7 @@
         msg: "You must update Ansible to at least 2.8 to use this setup."
 
     - name: Include playbook configuration
-      include_vars: "{{ item }}"
+      ansible.builtin.include_vars: "{{ item }}"
       with_fileglob:
         - "config.yml"
 

@@ -16,7 +16,7 @@
     - zsh-autosuggestions
 
 - name: Check if zshrc file exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ zshrc_file }}"
   register: zshrc
 
