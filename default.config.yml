@@ -1,6 +1,2 @@
 ---
-git_fullname: "Fullname"
-git_email: "email@domain.com"
-git_editor: "vim"
-
 ssh_dir: ~/.ssh/

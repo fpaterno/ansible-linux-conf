@@ -19,10 +19,10 @@
     - import_tasks: tasks/ssh_key.yml
       tags: ['ssh']
 
-    - import_tasks: tasks/git_config.yml
+  roles:
+    - role: git
       tags: ['git']
 
-  roles:
     - role: fpaterno.vim
       tags: ['vim']
 
