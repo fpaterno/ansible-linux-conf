@@ -1,0 +1,6 @@
+---
+vim_plugins:
+  - "https://github.com/vim-airline/vim-airline/archive/refs/heads/master.zip"
+
+vim_dir: '~/.vim'
+vimrc_file: '~/.vimrc'

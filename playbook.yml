@@ -23,7 +23,7 @@
     - role: git
       tags: ['git']
 
-    - role: fpaterno.vim
+    - role: vim
       tags: ['vim']
 
     - role: zsh

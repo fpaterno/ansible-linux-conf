@@ -1,0 +1,36 @@
+---
+- name: Install vim
+  become: true
+  ansible.builtin.package:
+    name: vim
+    state: present
+
+- name: Ensure .vim/{autoload,bundle} directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0744
+  with_items:
+    - "{{ vim_dir }}"
+    - "{{ vim_dir }}/autoload"
+    - "{{ vim_dir }}/bundle"
+
+- name: Esnure plugins are in place
+  ansible.builtin.unarchive:
+    src: "{{ item }}"
+    dest: "{{ vim_dir }}/bundle/"
+    remote_src: true
+  with_items: "{{ vim_plugins }}"
+
+- name: Ensure Pathogen is in place
+  ansible.builtin.get_url:
+    dest: "{{ vim_dir }}/autoload/pathogen.vim"
+    url: https://tpo.pe/pathogen.vim
+    mode: 0644
+
+- name: Copy .vimrc config
+  ansible.builtin.copy:
+    src: vimrc
+    dest: "{{ vimrc_file }}"
+    mode: 0644
+    backup: true
