@@ -11,8 +11,8 @@
     value: "{{ item.value }}"
     scope: global
   with_items:
-    - {name: "user.name", value: "{{ git_fullname }}"}
-    - {name: "user.email", value: "{{ git_email }}"}
+    - {name: "name", value: "{{ git_fullname }}"}
+    - {name: "email", value: "{{ git_email }}"}
 
 - name: Configure git aliases
   community.general.git_config:
