@@ -10,7 +10,7 @@ Override any of the defaults configured in `default.config.yml` (as fullname ...
 
 ## Installation
 
-First, install Python 3 which is required by Ansible :
+First, install Python 3 which is required by Ansible:
 
 On Debian :
 ```shell
@@ -22,14 +22,13 @@ On Fedora :
 $ sudo dnf install python3-pip
 ```
 
-Then, install [Ansible](https://www.ansible.com/) and required roles:
+Then, install [Ansible](https://www.ansible.com/):
 
 ```shell
 $ pip install ansible
-$ make install-dependencies
 ```
 
-Finally, find which task to run :
+Finally, find which task to run:
 
 ```shell
 $ make
