@@ -9,11 +9,13 @@
       ansible.builtin.assert:
         that: "ansible_version.full is version_compare('2.8', '>=')"
         msg: "You must update Ansible to at least 2.8 to use this setup."
+      tags: ['always']
 
     - name: Include playbook configuration
       ansible.builtin.include_vars: "{{ item }}"
       with_fileglob:
-        - "config.yml"
+        - "{{ playbook_dir }}/config.yml"
+      tags: ['always']
 
   tasks:
     - import_tasks: tasks/ssh_key.yml
