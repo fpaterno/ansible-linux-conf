@@ -22,10 +22,10 @@ On Fedora :
 $ sudo dnf install python3-pip
 ```
 
-Then, install [Ansible](https://www.ansible.com/):
+Then, install [Ansible](https://www.ansible.com/) globally:
 
 ```shell
-$ pip install ansible
+$ sudo pip install ansible
 ```
 
 Finally, find which task to run:
