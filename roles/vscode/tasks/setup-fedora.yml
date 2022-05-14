@@ -4,7 +4,7 @@
     src: vscode.repo
     dest: /etc/yum.repos.d/vscode.repo
     mode: 0644
-    force: no
+    force: false
 
 - name: Install Visual Code
   become: true
