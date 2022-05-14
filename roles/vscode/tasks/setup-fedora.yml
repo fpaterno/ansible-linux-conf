@@ -1,0 +1,13 @@
+- name: Add Visual Code repository
+  become: true
+  ansible.builtin.copy:
+    src: vscode.repo
+    dest: /etc/yum.repos.d/vscode.repo
+    mode: 0644
+    force: no
+
+- name: Install Visual Code
+  become: true
+  ansible.builtin.dnf:
+    name: code
+    state: present

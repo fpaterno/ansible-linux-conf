@@ -24,7 +24,10 @@ setup-zsh: ##@Setup Install & configure zsh
 setup-chrome: ##@Setup Install & configure Chrome
 	ansible-playbook playbook.yml --ask-become-pass --tags chrome
 
-.PHONY: global-setup setup-ssh setup-git setup-vim setup-zsh setup-chrome
+setup-vscode: ##@Setup Install Visual Code
+	ansible-playbook playbook.yml --ask-become-pass --tags vscode
+
+.PHONY: global-setup setup-ssh setup-git setup-vim setup-zsh setup-chrome setup-vscode
 
 HELP_FUN = \
     %help; while(<>){push@{$$help{$$2//'options'}},[$$1,$$3] \

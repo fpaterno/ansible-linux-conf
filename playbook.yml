@@ -33,3 +33,6 @@
 
     - role: chrome
       tags: ['chrome']
+
+    - role: vscode
+      tags: ['vscode']

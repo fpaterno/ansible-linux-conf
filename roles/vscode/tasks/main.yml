@@ -1,0 +1,4 @@
+---
+- import_tasks: setup-fedora.yml
+  when: ansible_os_family == "RedHat"
+
