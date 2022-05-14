@@ -36,3 +36,6 @@
 
     - role: vscode
       tags: ['vscode']
+
+    - role: docker
+      tags: ['docker']

@@ -27,7 +27,10 @@ setup-chrome: ##@Setup Install & configure Chrome
 setup-vscode: ##@Setup Install Visual Code
 	ansible-playbook playbook.yml --ask-become-pass --tags vscode
 
-.PHONY: global-setup setup-ssh setup-git setup-vim setup-zsh setup-chrome setup-vscode
+setup-docker: ##@Setup Docker
+	ansible-playbook playbook.yml --ask-become-pass --tags docker
+
+.PHONY: global-setup setup-ssh setup-git setup-vim setup-zsh setup-chrome setup-vscode setup-docker
 
 HELP_FUN = \
     %help; while(<>){push@{$$help{$$2//'options'}},[$$1,$$3] \
