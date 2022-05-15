@@ -1,0 +1,16 @@
+[include]
+	path = ~/.gitconfig.personal
+
+[includeIf "gitdir:**/professional/**/.git"]
+	path = ~/.gitconfig.professional
+
+[alias]
+	st = status
+	co = checkout
+	rpo = remote prune origin
+	rpot = fetch --prune origin +refs/tags/*:refs/tags/*
+	pfl = push --force-with-lease
+[core]
+	editor = vim
+[pager]
+	branch = false

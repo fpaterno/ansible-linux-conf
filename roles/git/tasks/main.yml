@@ -1,36 +1,12 @@
 ---
-- name: Install git
-  become: true
-  ansible.builtin.package:
-    name: git
-    state: present
+# - name: Install git
+#   become: true
+#   ansible.builtin.package:
+#     name: git
+#     state: present
 
-- name: Configure git user parameters
-  community.general.git_config:
-    name: "user.{{ item.name }}"
-    value: "{{ item.value }}"
-    scope: global
-  with_items:
-    - {name: "name", value: "{{ git_fullname }}"}
-    - {name: "email", value: "{{ git_email }}"}
+- import_tasks: personal.yml
 
-- name: Configure git aliases
-  community.general.git_config:
-    name: "alias.{{ item.name }}"
-    value: "{{ item.value }}"
-    scope: global
-  with_items:
-    - {name: "st", value: "status"}
-    - {name: "co", value: "checkout"}
-    - {name: "rpo", value: "remote prune origin"}
-    - {name: "rpot", value: "fetch --prune origin +refs/tags/*:refs/tags/*"}
-    - {name: "pfl", value: "push --force-with-lease"}
+- import_tasks: professional.yml
 
-- name: Configure others git parameters
-  community.general.git_config:
-    name: "{{ item.name }}"
-    value: "{{ item.value }}"
-    scope: global
-  with_items:
-    - {name: "core.editor", value: "{{ git_editor }}"}
-    - {name: "pager.branch", value: "false"}
+- import_tasks: global.yml

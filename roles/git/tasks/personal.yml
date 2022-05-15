@@ -1,0 +1,10 @@
+---
+- name: Configure personal git user parameters
+  community.general.git_config:
+    name: "user.{{ item.name }}"
+    value: "{{ item.value }}"
+    scope: file
+    file: "{{ git_personal_conf }}"
+  with_items:
+    - {name: "name", value: "{{ git_fullname }}"}
+    - {name: "email", value: "{{ git_personal_email }}"}

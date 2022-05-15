@@ -1,0 +1,7 @@
+---
+- name: Copy preformatted gitconfig file
+  ansible.builtin.copy:
+    src: gitconfig
+    dest: "~/.gitconfig"
+    mode: 0644
+    backup: true

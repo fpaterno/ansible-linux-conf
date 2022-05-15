@@ -22,7 +22,7 @@ On Fedora :
 $ sudo dnf install python3-pip
 ```
 
-Then, install [Ansible](https://www.ansible.com/) globally:
+Then, globally install [Ansible](https://www.ansible.com/):
 
 ```shell
 $ sudo pip install ansible
@@ -42,8 +42,14 @@ This installation has been created to run on Debian (Ubuntu) and Fedora. It incl
 - [Vim](https://www.vim.org/)
 - [Zsh](https://www.zsh.org/) with [Oh my Zsh](https://ohmyz.sh/) framework
 - [Google Chrome](https://www.google.com/intl/fr_fr/chrome/)
-- [Git](https://git-scm.com/) and custom aliases / configuration
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [Docker](https://www.docker.com/)
 - [OpenSSH](https://www.openssh.com/) private and public keys generation
+- [Git](https://git-scm.com/) and custom aliases / configuration
+
+    Git configuration is managed for 2 distincts environments:
+    - Personal config loaded by default
+    - Professional config only loaded when repository is into "professional" folder
 
 ## Extra configuration
 
