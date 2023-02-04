@@ -7,9 +7,14 @@
 [alias]
 	st = status
 	co = checkout
+        ci = commit
+        ca = commit --amend
+        br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
 	rpo = remote prune origin
 	rpot = fetch --prune origin +refs/tags/*:refs/tags/*
 	pfl = push --force-with-lease
+        clean-br = "!f() { git fetch --all --prune; git branch -vv | awk '/: gone]/{print $1}' | xargs -r git branch -D; }; f"
+        aliases = "!git config --get-regexp ^alias\\. | sed -e s/^alias.// -e s/\\ /\\ $(printf \"\\043\")--\\ / | column -t -s $(printf \"\\043\")"
 [core]
 	editor = vim
 [pager]

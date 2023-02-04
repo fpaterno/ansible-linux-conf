@@ -1,9 +1,9 @@
 ---
-# - name: Install git
-#   become: true
-#   ansible.builtin.package:
-#     name: git
-#     state: present
+- name: Install git
+  become: true
+  ansible.builtin.package:
+    name: git
+    state: present
 
 - import_tasks: personal.yml
 
