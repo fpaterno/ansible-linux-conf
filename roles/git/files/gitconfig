@@ -14,6 +14,7 @@
 	rpot = fetch --prune origin +refs/tags/*:refs/tags/*
 	pfl = push --force-with-lease
         clean-br = "!f() { git fetch --all --prune; git branch -vv | awk '/: gone]/{print $1}' | xargs -r git branch -D; }; f"
+        search = "!git show --no-patch $(git fsck --unreachable --no-reflog | grep commit | cut -d' ' -f3)"
         aliases = "!git config --get-regexp ^alias\\. | sed -e s/^alias.// -e s/\\ /\\ $(printf \"\\043\")--\\ / | column -t -s $(printf \"\\043\")"
 [core]
 	editor = vim
