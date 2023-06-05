@@ -26,4 +26,10 @@
   ansible.builtin.lineinfile:
     path: "{{ zshrc_file }}"
     regexp: ^plugins=
-    line: plugins=(zsh-syntax-highlighting zsh-autosuggestions sudo web-search)
+    line: plugins=(zsh-syntax-highlighting zsh-autosuggestions nvm sudo)
+
+- name: Activate nvm autoload
+  ansible.builtin.lineinfile:
+    path: "{{ zshrc_file }}"
+    insertafter: ^plugins=
+    line: zstyle ':omz:plugins:nvm' autoload true
