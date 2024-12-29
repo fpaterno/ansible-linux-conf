@@ -9,7 +9,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: 0744
+    mode: 0755
   with_items:
     - "{{ vim_dir }}"
     - "{{ vim_dir }}/autoload"

@@ -2,7 +2,7 @@
   ansible.builtin.file:
     path: "~/.ssh/"
     state: directory
-    mode: 0700
+    mode: 0755
 
 - name: Generate ssh private and public keys
   community.crypto.openssh_keypair:
