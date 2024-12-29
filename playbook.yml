@@ -19,14 +19,14 @@
 
   tasks:
     - import_tasks: tasks/ssh_key.yml
-      tags: ['ssh']
+      tags: ['ssh', 'minimal']
 
   roles:
     - role: git
-      tags: ['git']
+      tags: ['git', 'minimal']
 
     - role: vim
-      tags: ['vim']
+      tags: ['vim', 'minimal']
 
     - role: zsh
       tags: ['zsh']

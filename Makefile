@@ -6,31 +6,34 @@ help:
 	@echo "Please report any bug or error to the author\n"
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
 
-global-setup: ##@Setup Execute all tasks
+global-setup: ##@Global Execute all tasks
 	ansible-playbook playbook.yml --ask-become-pass
 
-setup-ssh: ##@Setup Generate ssh key
+minimal-setup: ##@Global Execute minimalist setup with ssh, vim & git
+	ansible-playbook playbook.yml --ask-become-pass --tags minimal
+
+setup-ssh: ##@Single Generate ssh key
 	ansible-playbook playbook.yml --ask-become-pass --tags ssh
 
-setup-git: ##@Setup Install & configure git
+setup-git: ##@Single Install & configure git
 	ansible-playbook playbook.yml --ask-become-pass --tags git
 
-setup-vim: ##@Setup Install & configure vim
+setup-vim: ##@Single Install & configure vim
 	ansible-playbook playbook.yml --ask-become-pass --tags vim
 
-setup-zsh: ##@Setup Install & configure zsh
+setup-zsh: ##@Single Install & configure zsh
 	ansible-playbook playbook.yml --ask-become-pass --tags zsh
 
-setup-chrome: ##@Setup Install & configure Chrome
+setup-chrome: ##@Single Install & configure Chrome
 	ansible-playbook playbook.yml --ask-become-pass --tags chrome
 
-setup-vscode: ##@Setup Install Visual Code
+setup-vscode: ##@Single Install Visual Code
 	ansible-playbook playbook.yml --ask-become-pass --tags vscode
 
-setup-docker: ##@Setup Docker
+setup-docker: ##@Single Docker
 	ansible-playbook playbook.yml --ask-become-pass --tags docker
 
-.PHONY: global-setup setup-ssh setup-git setup-vim setup-zsh setup-chrome setup-vscode setup-docker
+.PHONY: global-setup minimal-setup setup-ssh setup-git setup-vim setup-zsh setup-chrome setup-vscode setup-docker
 
 HELP_FUN = \
     %help; while(<>){push@{$$help{$$2//'options'}},[$$1,$$3] \
