@@ -41,11 +41,12 @@ Enter your Linux account password when prompted for the 'BECOME' password.
 This installation has been created to run on Debian (Ubuntu) and Fedora. It includes:
 - [Vim](https://www.vim.org/)
 - [Zsh](https://www.zsh.org/) with [Oh my Zsh](https://ohmyz.sh/) framework
+- [Node Version Manager](https://github.com/nvm-sh/nvm) (nvm)
 - [Google Chrome](https://www.google.com/intl/fr_fr/chrome/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Docker](https://www.docker.com/)
 - [OpenSSH](https://www.openssh.com/) private and public keys generation
-- [Git](https://git-scm.com/) and custom aliases / configuration
+- [Git](https://git-scm.com/) with custom aliases / configuration and working directory structure into `~/Projects`
 
     Git configuration is managed for 2 distincts environments:
     - Personal config loaded by default
@@ -53,12 +54,5 @@ This installation has been created to run on Debian (Ubuntu) and Fedora. It incl
 
 ## Extra configuration
 
-### Gnome-terminal color
-
-Install Flat theme by launching Gogh color :
-
-```shell
-$ bash -c  "$(wget -qO- https://git.io/vQgMr)"
-```
-
-Chosse "Flat" theme and select this theme into Gnome-terminal preference.
+Specific tools / extensions :
+- [Tray Icon Reloaded](https://extensions.gnome.org/extension/2890/tray-icons-reloaded/) to bring back Tray Icons to Gnome top panel
