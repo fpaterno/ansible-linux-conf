@@ -21,6 +21,9 @@
     - import_tasks: tasks/ssh_key.yml
       tags: ['ssh', 'minimal']
 
+    - import_tasks: tasks/nvm.yml
+      tags: ['nvm']
+
   roles:
     - role: git
       tags: ['git', 'minimal']

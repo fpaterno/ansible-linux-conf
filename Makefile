@@ -24,6 +24,9 @@ setup-vim: ##@Single Install & configure vim
 setup-zsh: ##@Single Install & configure zsh
 	ansible-playbook playbook.yml --ask-become-pass --tags zsh
 
+setup-nvm: ##@Single Install & configure nvm
+	ansible-playbook playbook.yml --ask-become-pass --tags nvm
+
 setup-chrome: ##@Single Install & configure Chrome
 	ansible-playbook playbook.yml --ask-become-pass --tags chrome
 
@@ -33,7 +36,7 @@ setup-vscode: ##@Single Install Visual Code
 setup-docker: ##@Single Docker
 	ansible-playbook playbook.yml --ask-become-pass --tags docker
 
-.PHONY: global-setup minimal-setup setup-ssh setup-git setup-vim setup-zsh setup-chrome setup-vscode setup-docker
+.PHONY: global-setup minimal-setup setup-ssh setup-git setup-vim setup-zsh setup-nvm setup-chrome setup-vscode setup-docker
 
 HELP_FUN = \
     %help; while(<>){push@{$$help{$$2//'options'}},[$$1,$$3] \
