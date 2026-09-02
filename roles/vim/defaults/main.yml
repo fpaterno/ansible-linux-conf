@@ -1,6 +1,6 @@
 ---
 vim_plugins:
-  - "https://github.com/vim-airline/vim-airline/archive/refs/heads/master.zip"
+  - "https://github.com/vim-airline/vim-airline/archive/refs/heads/master.tar.gz"
 
-vim_dir: '~/.vim'
-vim_rc_file: '~/.vimrc'
+vim_dir: "{{ ansible_user_dir }}/.vim"
+vim_rc_file: "{{ ansible_user_dir }}/.vimrc"

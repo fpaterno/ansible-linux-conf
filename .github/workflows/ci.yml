@@ -35,6 +35,19 @@ jobs:
   integration:
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - name: "Ubuntu 26.04 (Latest)"
+            image: "geerlingguy/docker-ubuntu2604-ansible:latest"
+          - name: "Fedora 44 (Latest)"
+            image: "geerlingguy/docker-fedora44-ansible:latest"
+
+    container:
+      image: ${{ matrix.distro.image }}
+      options: --privileged --volume /sys/fs/cgroup:/sys/fs/cgroup:rw
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -54,7 +67,7 @@ jobs:
       - name: Idempotence check
         run: |
           idempotence=$(mktemp)
-          ansible-playbook playbook.yml | tee -a ${idempotence}
+          ansible-playbook playbook.yml --diff | tee -a ${idempotence}
           tail ${idempotence} | grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' && exit 0) || (echo 'Idempotence test: fail' && exit 1)
         env:
           ANSIBLE_FORCE_COLOR: '1'

@@ -5,14 +5,14 @@
     url: https://download.docker.com/linux/fedora/docker-ce.repo
     mode: '0644'
 
-- name: Install latest version of Docker Engine (and docker-compose)
+- name: Install Docker Engine and plugins
   become: true
   ansible.builtin.dnf:
-    name: "{{ item }}"
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
     state: present
-  with_items:
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
-    - docker-compose-plugin
-    - docker-compose
+    update_cache: true

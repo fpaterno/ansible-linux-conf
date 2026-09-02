@@ -1,5 +1,5 @@
 ---
-zsh_rc_file: ~/.zshrc
-zsh_omz_dir: "~/.oh-my-zsh"
+zsh_rc_file: "{{ ansible_user_dir }}/.zshrc"
+zsh_omz_dir: "{{ ansible_user_dir }}/.oh-my-zsh"
 zsh_omz_custom_dir: "{{ zsh_omz_dir }}/custom"
-zsh_p10k_file: "~/.p10k.zsh"
+zsh_p10k_file: "{{ ansible_user_dir }}/.p10k.zsh"

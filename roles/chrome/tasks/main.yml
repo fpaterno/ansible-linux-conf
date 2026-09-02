@@ -1,14 +1,8 @@
 ---
 - name: Import Debian setup tasks
-  ansible.builtin.import_tasks: setup-debian.yml
+  ansible.builtin.include_tasks: setup-debian.yml
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Import Fedora setup tasks
-  ansible.builtin.import_tasks: setup-fedora.yml
+  ansible.builtin.include_tasks: setup-fedora.yml
   when: ansible_facts['os_family'] == "RedHat"
-
-- name: Install Google Chrome
-  become: true
-  ansible.builtin.package:
-    name: google-chrome-stable
-    state: present
