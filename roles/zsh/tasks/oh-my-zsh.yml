@@ -2,13 +2,13 @@
 - name: Clone Oh My Zsh
   ansible.builtin.git:
     repo: https://github.com/robbyrussell/oh-my-zsh.git
-    dest: "{{ omz_dir }}"
+    dest: "{{ zsh_omz_dir }}"
     version: master
 
 - name: Install zsh plugins
   ansible.builtin.git:
     repo: https://github.com/zsh-users/{{ item }}.git
-    dest: "{{ omz_custom_dir }}/plugins/{{ item }}"
+    dest: "{{ zsh_omz_custom_dir }}/plugins/{{ item }}"
     depth: 1
     version: master
   with_items:
@@ -17,19 +17,19 @@
 
 - name: Create zshrc file
   ansible.builtin.copy:
-    src: "{{ omz_dir }}/templates/zshrc.zsh-template"
-    dest: "{{ zshrc_file }}"
-    mode: 0644
+    src: "{{ zsh_omz_dir }}/templates/zshrc.zsh-template"
+    dest: "{{ zsh_rc_file }}"
+    mode: '0644'
     force: false
 
 - name: Configure zsh plugins
   ansible.builtin.lineinfile:
-    path: "{{ zshrc_file }}"
+    path: "{{ zsh_rc_file }}"
     regexp: ^plugins=
     line: plugins=(zsh-syntax-highlighting zsh-autosuggestions nvm sudo)
 
 - name: Activate nvm autoload
   ansible.builtin.lineinfile:
-    path: "{{ zshrc_file }}"
+    path: "{{ zsh_rc_file }}"
     insertafter: ^plugins=
     line: zstyle ':omz:plugins:nvm' autoload true

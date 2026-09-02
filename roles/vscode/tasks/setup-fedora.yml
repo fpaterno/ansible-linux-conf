@@ -3,7 +3,7 @@
   ansible.builtin.copy:
     src: vscode.repo
     dest: /etc/yum.repos.d/vscode.repo
-    mode: 0644
+    mode: '0644'
     force: false
 
 - name: Install Visual Code

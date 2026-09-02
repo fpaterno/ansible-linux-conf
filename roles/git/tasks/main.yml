@@ -5,8 +5,11 @@
     name: git
     state: present
 
-- import_tasks: personal.yml
+- name: Import personal Git setup tasks
+  ansible.builtin.import_tasks: personal.yml
 
-- import_tasks: professional.yml
+- name: Import professional Git setup tasks
+  ansible.builtin.import_tasks: professional.yml
 
-- import_tasks: global.yml
+- name: Import global Git setup tasks
+  ansible.builtin.import_tasks: global.yml

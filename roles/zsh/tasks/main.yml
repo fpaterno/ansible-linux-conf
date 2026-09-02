@@ -5,11 +5,14 @@
     name: zsh
     state: present
 
-- name: Set zsh to default shell for "{{ ansible_user_id }}" user
+- name: Set zsh to default shell for user {{ ansible_user_id }}
   become: true
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
 
-- import_tasks: tasks/oh-my-zsh.yml
-- import_tasks: powerlevel10k.yml
+- name: Import Oh My Zsh setup tasks
+  ansible.builtin.import_tasks: tasks/oh-my-zsh.yml
+
+- name: Import Powerlevel10k setup tasks
+  ansible.builtin.import_tasks: powerlevel10k.yml

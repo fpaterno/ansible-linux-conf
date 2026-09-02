@@ -5,7 +5,7 @@
   ansible.builtin.copy:
     src: google-chrome.repo
     dest: /etc/yum.repos.d/google-chrome.repo
-    mode: 0644
+    mode: '0644'
     force: false
 
 - name: Import Google Chrome signing key

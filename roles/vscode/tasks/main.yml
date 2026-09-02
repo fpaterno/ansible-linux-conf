@@ -1,3 +1,4 @@
 ---
-- import_tasks: setup-fedora.yml
+- name: Import Fedora VS Code setup tasks
+  ansible.builtin.import_tasks: setup-fedora.yml
   when: ansible_facts['os_family'] == "RedHat"
