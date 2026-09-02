@@ -4,6 +4,7 @@
   ansible.builtin.package:
     name: git
     state: present
+    update_cache: true
 
 - name: Import personal Git setup tasks
   ansible.builtin.import_tasks: personal.yml

@@ -1,13 +1,32 @@
 ---
-- name: Add Google Chrome repository and key
+- name: Prevent Google Chrome from adding its own APT repository
   become: true
-  ansible.builtin.deb822_repository:
-    name: google-chrome
-    types: deb
-    uris: https://dl.google.com/linux/chrome/deb/
-    suites: stable
-    components: main
-    architectures: amd64
-    signed_by: https://dl.google.com/linux/linux_signing_key.pub
-    install_python_debian: true
-    state: present
+  ansible.builtin.copy:
+    dest: /etc/default/google-chrome
+    content: 'repo_add_once="false"'
+    mode: '0644'
+
+- name: Check if Google Chrome is already installed
+  ansible.builtin.command: dpkg-query -W -f='${Status}' google-chrome-stable
+  register: chrome_check
+  failed_when: false
+  changed_when: false
+
+- name: Download Google Chrome .deb package
+  ansible.builtin.get_url:
+    url: "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"
+    dest: "/tmp/google-chrome-stable_current_amd64.deb"
+    mode: "0644"
+  when: "'install ok installed' not in chrome_check.stdout"
+
+- name: Install Google Chrome via apt-get CLI (bypass python-apt t64 issue)
+  become: true
+  ansible.builtin.command: apt-get install -y /tmp/google-chrome-stable_current_amd64.deb # noqa: command-instead-of-module
+  when: "'install ok installed' not in chrome_check.stdout"
+  changed_when: true
+
+- name: Clean up temporary .deb file
+  become: true
+  ansible.builtin.file:
+    path: "/tmp/google-chrome-stable_current_amd64.deb"
+    state: absent

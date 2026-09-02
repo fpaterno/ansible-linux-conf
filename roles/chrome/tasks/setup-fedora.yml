@@ -13,3 +13,10 @@
   ansible.builtin.rpm_key:
     key: https://dl-ssl.google.com/linux/linux_signing_key.pub
     state: present
+
+- name: Install Google Chrome
+  become: true
+  ansible.builtin.package:
+    name: google-chrome-stable
+    state: present
+    update_cache: true
