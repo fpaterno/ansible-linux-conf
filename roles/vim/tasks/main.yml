@@ -9,7 +9,7 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: 0755
+    mode: '0755'
   with_items:
     - "{{ vim_dir }}"
     - "{{ vim_dir }}/autoload"
@@ -26,11 +26,11 @@
   ansible.builtin.get_url:
     dest: "{{ vim_dir }}/autoload/pathogen.vim"
     url: https://tpo.pe/pathogen.vim
-    mode: 0644
+    mode: '0644'
 
 - name: Copy .vimrc config
   ansible.builtin.copy:
     src: vimrc
-    dest: "{{ vimrc_file }}"
-    mode: 0644
+    dest: "{{ vim_rc_file }}"
+    mode: '0644'
     backup: true

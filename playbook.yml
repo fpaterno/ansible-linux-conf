@@ -18,10 +18,12 @@
       tags: ['always']
 
   tasks:
-    - import_tasks: tasks/ssh_key.yml
+    - name: Import SSH key tasks
+      ansible.builtin.import_tasks: tasks/ssh_key.yml
       tags: ['ssh', 'minimal']
 
-    - import_tasks: tasks/nvm.yml
+    - name: Import NVM tasks
+      ansible.builtin.import_tasks: tasks/nvm.yml
       tags: ['nvm']
 
   roles:

@@ -3,7 +3,7 @@
   ansible.builtin.get_url:
     dest: /etc/yum.repos.d/docker-ce.repo
     url: https://download.docker.com/linux/fedora/docker-ce.repo
-    mode: 0644
+    mode: '0644'
 
 - name: Install latest version of Docker Engine (and docker-compose)
   become: true

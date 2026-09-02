@@ -3,5 +3,5 @@
   ansible.builtin.copy:
     src: gitconfig
     dest: "~/.gitconfig"
-    mode: 0644
+    mode: '0644'
     backup: true
