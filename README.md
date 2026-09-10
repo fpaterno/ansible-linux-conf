@@ -2,55 +2,59 @@
 
 [![Continuous Integration](https://github.com/fpaterno/ansible-linux-conf/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fpaterno/ansible-linux-conf/actions/workflows/ci.yml)
 
-This repository includes a tool to automatically install and configure most of the software I use on my Linux installation.
+This repository contains an Ansible-based orchestration setup designed to configure and maintain a Fedora workstation environment cleanly and predictably.
+
+## Prerequisites
+
+Ansible is the only host requirement. On Fedora, install it using the system package manager:
+
+```shell
+$ sudo dnf install ansible
+```
+
+> **Note:** Python 3 and required system dependencies are automatically resolved by `dnf`.
 
 ## Configuration
 
-Override any of the defaults configured in `default.config.yml` (as fullname ...) by creating a `config.yml` and redefining these variables in this file.
-
-## Installation
-
-First, install Python 3 which is required by Ansible:
-
-On Debian :
-```shell
-$ sudo apt install python3-pip
-```
-
-On Fedora :
-```shell
-$ sudo dnf install python3-pip
-```
-
-Then, globally install [Ansible](https://www.ansible.com/):
+To customize user settings (such as Git identity, SSH options, or default paths), copy the example configuration file and override variables as needed:
 
 ```shell
-$ sudo pip install ansible
+$ cp default.config.yml config.yml
 ```
 
-Finally, find which task to run:
+Edit config.yml with your own personal and professional settings before running any setup tasks.
+
+## CLI Interface
+A dependency-free Bash script serves as the main entry point to inspect, list, and apply Ansible configurations without polluting system paths.
+
+To display all available commands and roles:
 
 ```shell
-$ make
+$ ./run
 ```
 
-Enter your Linux account password when prompted for the 'BECOME' password.
+* **`inspect <role>`** : Preview execution changes without modifying the system (`--check --diff`).
+* **`list <role>`** : Display the list of Ansible tasks executed by the specified role.
+* **`setup <role>`** : Apply the configuration to the local system.
 
-## Included applications & configuration
+> Enter your Linux account password when prompted for the 'BECOME' password.
 
-This installation has been created to run on Debian (Ubuntu) and Fedora. It includes:
+## Included roles
+
+This setup is designed for both Fedora (workstations) and Debian (servers). Note that roles are targeted by playbooks based on host groups, so not all roles run on every environment:
+
 - [Vim](https://www.vim.org/)
-- [Zsh](https://www.zsh.org/) with [Oh my Zsh](https://ohmyz.sh/) framework
+- [Zsh](https://www.zsh.org/) with [Oh My Zsh](https://ohmyz.sh/) framework
 - [Node Version Manager](https://github.com/nvm-sh/nvm) (nvm)
 - [Google Chrome](https://www.google.com/intl/fr_fr/chrome/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 - [Docker](https://www.docker.com/)
-- [OpenSSH](https://www.openssh.com/) private and public keys generation
-- [Git](https://git-scm.com/) with custom aliases / configuration and working directory structure into `~/Projects`
+- [OpenSSH](https://www.openssh.com/) public and private key generation
+- [Git](https://git-scm.com/) with custom aliases, global configuration, and workspace management under `~/Projects`
 
-    Git configuration is managed for 2 distincts environments:
-    - Personal config loaded by default
-    - Professional config only loaded when repository is into "professional" folder
+    Git identity is managed for 2 distinct environments:
+    - Personal configuration loaded by default
+    - Professional configuration automatically scoped when repositories are inside dedicated work folders
 
 ## Extra configuration
 
