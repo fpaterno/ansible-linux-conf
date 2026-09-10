@@ -1,14 +1,7 @@
-- name: Install nvm
+---
+- name: Install nvm {{ nvm_version }}
   ansible.builtin.git:
     repo: https://github.com/nvm-sh/nvm.git
     dest: "{{ ansible_facts['user_dir'] }}/.nvm"
-    version: v0.40.7
+    version: "{{ nvm_version }}"
     depth: 1
-
-- name: Plug configuration into .zshrc file
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_facts['user_dir'] }}/.zshrc"
-    marker: "# {mark} nvm configuration"
-    block: |
-      export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm

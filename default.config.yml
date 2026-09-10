@@ -2,3 +2,5 @@
 git_fullname: "Fullname"
 git_personal_email: "email@home.com"
 git_professional_email: "email@work.com"
+
+nvm_version: "v0.40.7"

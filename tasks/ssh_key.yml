@@ -1,11 +1,11 @@
 - name: Create home .ssh directory
   ansible.builtin.file:
-    path: "{{ ansible_facts['env']['HOME'] }}/.ssh"
+    path: "{{ ansible_facts['user_dir'] }}/.ssh"
     state: directory
     mode: '0700'
 
 - name: Generate SSH private and public keys (ED25519)
   community.crypto.openssh_keypair:
-    path: "{{ ansible_facts['env']['HOME'] }}/.ssh/id_ed25519"
+    path: "{{ ansible_facts['user_dir'] }}/.ssh/id_ed25519"
     type: ed25519
     mode: '0600'
