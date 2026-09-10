@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+INVENTORY="inventory"
+PLAYBOOK="playbook.yml"
+
+# Roles declaration and their descriptions
+declare -A GLOBAL_ROLES=(
+  ["global-setup"]="Execute all roles"
+  ["minimal-setup"]="Execute roles ssh, vim & git"
+)
+
+declare -A SINGLE_ROLES=(
+  ["ssh"]="Generate public and private SSH keys (ED25519)"
+  ["git"]="Install & configure Git"
+  ["vim"]="Install & configure Vim"
+  ["zsh"]="Install & configure Zsh"
+  ["nvm"]="Install & configure NVM"
+  ["chrome"]="Install Google Chrome"
+  ["vscode"]="Install Visual Studio Code"
+  ["docker"]="Install & configure Docker"
+)
+
+usage() {
+  echo -e "\033[33mUsage:\033[0m ./run [inspect|list|setup] [role]"
+  echo ""
+  echo -e "\033[33mCommands:\033[0m"
+  echo "  inspect <role>  Preview changes (--check --diff)"
+  echo "  list    <role>  List tasks executed by the role"
+  echo "  setup   <role>  Apply configuration"
+  echo ""
+  echo -e "\033[33mGlobal roles:\033[0m"
+  for role in "${!GLOBAL_ROLES[@]}"; do
+    printf "  \033[32m%-20s\033[0m %s\n" "$role" "${GLOBAL_ROLES[$role]}"
+  done
+  echo ""
+  echo -e "\033[33mSpecific roles:\033[0m"
+  for role in "${!SINGLE_ROLES[@]}"; do
+    printf "  \033[32m%-20s\033[0m %s\n" "$role" "${SINGLE_ROLES[$role]}"
+  done
+  exit 1
+}
+
+ACTION="${1:-}"
+ROLE="${2:-}"
+
+# Show usage if action or role is missing
+if [[ -z "$ACTION" || -z "$ROLE" ]]; then
+  usage
+fi
+
+# Role validation
+TAG_TARGET=""
+if [[ -n "${GLOBAL_ROLES[$ROLE]:-}" ]]; then
+  TAG_TARGET="$ROLE"
+elif [[ -n "${SINGLE_ROLES[$ROLE]:-}" ]]; then
+  TAG_TARGET="$ROLE"
+else
+  usage
+fi
+
+case "$ACTION" in
+  inspect)
+    ansible-playbook -i "$INVENTORY" "$PLAYBOOK" --tags "$TAG_TARGET" --ask-become-pass --check --diff
+    ;;
+  setup)
+    ansible-playbook -i "$INVENTORY" "$PLAYBOOK" --tags "$TAG_TARGET" --ask-become-pass
+    ;;
+  list)
+    ansible-playbook -i "$INVENTORY" "$PLAYBOOK" --tags "$TAG_TARGET" --list-tasks
+    ;;
+  *)
+    usage
+    ;;
+esac
