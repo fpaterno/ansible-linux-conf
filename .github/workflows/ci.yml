@@ -39,8 +39,6 @@ jobs:
       fail-fast: false
       matrix:
         distro:
-          - name: "Ubuntu 26.04 (Latest)"
-            image: "geerlingguy/docker-ubuntu2604-ansible:latest"
           - name: "Fedora 44 (Latest)"
             image: "geerlingguy/docker-fedora44-ansible:latest"
 

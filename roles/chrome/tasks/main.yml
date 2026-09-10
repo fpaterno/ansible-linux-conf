@@ -1,8 +1,0 @@
----
-- name: Import Debian setup tasks
-  ansible.builtin.include_tasks: setup-debian.yml
-  when: ansible_facts['os_family'] == "Debian"
-
-- name: Import Fedora setup tasks
-  ansible.builtin.include_tasks: setup-fedora.yml
-  when: ansible_facts['os_family'] == "RedHat"

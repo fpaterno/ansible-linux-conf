@@ -9,7 +9,7 @@
     - name: Verify Ansible meets setup version requirements
       ansible.builtin.assert:
         that: "ansible_version.full is version('2.15', '>=')"
-        msg: "You must update Ansible to at least 2.15 to use this setup."
+        fail_msg: "You must update Ansible to at least 2.15 to use this setup."
       tags: ['always']
 
   tasks:
@@ -24,10 +24,23 @@
     - default.config.yml
     - config.yml
 
+  pre_tasks:
+    - name: Verify Ansible meets operating system requirements (Fedora)
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['os_family'] == 'RedHat'
+          - ansible_facts['distribution'] == 'Fedora'
+        fail_msg: "This workstation playbook is explicitly designed for Fedora."
+      tags: ['always']
+
   tasks:
     - name: Import NVM tasks
       ansible.builtin.import_tasks: tasks/nvm.yml
       tags: ['nvm']
+
+    - name: Import Google Chrome tasks
+      ansible.builtin.import_tasks: tasks/google_chrome.yml
+      tags: ['chrome']
 
   roles:
     - role: git
@@ -38,9 +51,6 @@
 
     - role: zsh
       tags: ['zsh']
-
-    - role: chrome
-      tags: ['chrome']
 
     - role: vscode
       tags: ['vscode']
