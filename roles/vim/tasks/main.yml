@@ -1,36 +1,42 @@
 ---
-- name: Install vim
+- name: Install vim package
   become: true
   ansible.builtin.package:
     name: vim
     state: present
 
-- name: Ensure .vim/{autoload,bundle} directories exist
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    mode: '0755'
-  with_items:
-    - "{{ vim_dir }}"
-    - "{{ vim_dir }}/autoload"
-    - "{{ vim_dir }}/bundle"
+- name: Configure Vim plugins ecosystem
+  when: vim_enable_plugins | default(false)
+  block:
+    - name: Ensure .vim directories exist
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - "{{ vim_dir }}"
+        - "{{ vim_dir }}/autoload"
+        - "{{ vim_dir }}/bundle"
 
-- name: Esnure plugins are in place
-  ansible.builtin.unarchive:
-    src: "{{ item }}"
-    dest: "{{ vim_dir }}/bundle/"
-    remote_src: true
-  with_items: "{{ vim_plugins }}"
+    - name: Ensure Pathogen is in place
+      ansible.builtin.get_url:
+        url: https://tpo.pe/pathogen.vim
+        dest: "{{ vim_dir }}/autoload/pathogen.vim"
+        mode: '0644'
 
-- name: Ensure Pathogen is in place
-  ansible.builtin.get_url:
-    dest: "{{ vim_dir }}/autoload/pathogen.vim"
-    url: https://tpo.pe/pathogen.vim
-    mode: '0644'
+    - name: Ensure plugins are in place
+      ansible.builtin.git:
+        repo: "{{ item.repo }}"
+        dest: "{{ vim_dir }}/bundle/{{ item.name }}"
+        version: "{{ item.version | default('HEAD') }}"
+        depth: 1
+      loop: "{{ vim_plugins }}"
+      loop_control:
+        label: "{{ item.name }}"
 
-- name: Copy .vimrc config
-  ansible.builtin.copy:
-    src: vimrc
+- name: Deploy .vimrc config
+  ansible.builtin.template:
+    src: vimrc.j2
     dest: "{{ vim_rc_file }}"
     mode: '0644'
     backup: true
