@@ -1,18 +1,11 @@
 ---
-- name: Install zsh
-  become: true
-  ansible.builtin.package:
-    name: zsh
-    state: present
-
-- name: Set zsh to default shell for user {{ ansible_user_id }}
-  become: true
-  ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
-    shell: /usr/bin/zsh
+- name: Import base zsh installation tasks
+  ansible.builtin.import_tasks: install.yml
 
 - name: Import Oh My Zsh setup tasks
-  ansible.builtin.import_tasks: tasks/oh-my-zsh.yml
+  ansible.builtin.import_tasks: oh-my-zsh.yml
+  when: zsh_enable_omz | bool
 
 - name: Import Powerlevel10k setup tasks
   ansible.builtin.import_tasks: powerlevel10k.yml
+  when: zsh_enable_omz | bool

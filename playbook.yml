@@ -17,6 +17,12 @@
       ansible.builtin.import_tasks: tasks/ssh_key.yml
       tags: ['ssh', 'minimal']
 
+
+    - name: Import zsh tasks
+      ansible.builtin.import_role:
+        name: zsh
+      tags: ['zsh']
+
 - name: Workstation base configuration
   hosts: workstations
 
@@ -48,9 +54,6 @@
 
     - role: vim
       tags: ['vim', 'minimal']
-
-    - role: zsh
-      tags: ['zsh']
 
     - role: vscode
       tags: ['vscode']
