@@ -6,8 +6,8 @@ PLAYBOOK="playbook.yml"
 
 # Roles declaration and their descriptions
 declare -A GLOBAL_ROLES=(
-  ["global-setup"]="Execute all roles"
-  ["minimal-setup"]="Execute roles ssh, vim & git"
+  ["global"]="Execute all roles"
+  ["minimal"]="Execute only ssh, vim & git roles"
 )
 
 declare -A SINGLE_ROLES=(
@@ -59,15 +59,20 @@ else
   usage
 fi
 
+TAG_ARGS=()
+if [[ "$ROLE" != "global" ]]; then
+  TAG_ARGS=(--tags "$TAG_TARGET")
+fi
+
 case "$ACTION" in
   inspect)
-    ansible-playbook -i "$INVENTORY" "$PLAYBOOK" --tags "$TAG_TARGET" --ask-become-pass --check --diff
+    ansible-playbook -i "$INVENTORY" "$PLAYBOOK" "${TAG_ARGS[@]}" --ask-become-pass --check --diff
     ;;
   setup)
-    ansible-playbook -i "$INVENTORY" "$PLAYBOOK" --tags "$TAG_TARGET" --ask-become-pass
+    ansible-playbook -i "$INVENTORY" "$PLAYBOOK" "${TAG_ARGS[@]}" --ask-become-pass
     ;;
   list)
-    ansible-playbook -i "$INVENTORY" "$PLAYBOOK" --tags "$TAG_TARGET" --list-tasks
+    ansible-playbook -i "$INVENTORY" "$PLAYBOOK" "${TAG_ARGS[@]}" --list-tasks
     ;;
   *)
     usage
