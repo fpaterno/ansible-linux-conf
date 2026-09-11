@@ -1,6 +1,10 @@
 set number
 set laststatus=2
+set expandtab
+set softtabstop=2
+{% if vim_enable_plugins %}
 
 execute pathogen#infect()
 
 let g:airline#extensions#tabline#enabled=1
+{% endif %}

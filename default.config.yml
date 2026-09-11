@@ -4,3 +4,6 @@ git_personal_email: "email@home.com"
 git_professional_email: "email@work.com"
 
 nvm_version: "v0.40.7"
+
+vim_plugin_versions:
+  airline: "v0.12"

@@ -23,6 +23,11 @@
         name: zsh
       tags: ['zsh']
 
+    - name: Import vim tasks
+      ansible.builtin.import_role:
+        name: vim
+      tags: ['vim', 'minimal']
+
 - name: Workstation base configuration
   hosts: workstations
 
@@ -51,9 +56,6 @@
   roles:
     - role: git
       tags: ['git', 'minimal']
-
-    - role: vim
-      tags: ['vim', 'minimal']
 
     - role: vscode
       tags: ['vscode']
