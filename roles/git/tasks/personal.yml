@@ -1,7 +1,7 @@
 ---
 - name: Create personal project directory
   ansible.builtin.file:
-    path: "~/Projects/personal"
+    path: "{{ ansible_facts['user_dir'] }}/Projects/personal"
     state: directory
     mode: '0755'
 

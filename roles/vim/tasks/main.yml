@@ -8,6 +8,12 @@
 - name: Configure Vim plugins ecosystem
   when: vim_enable_plugins | default(false)
   block:
+    - name: Ensure git is present (required to clone plugins)
+      become: true
+      ansible.builtin.package:
+        name: git
+        state: present
+
     - name: Ensure .vim directories exist
       ansible.builtin.file:
         path: "{{ item }}"

@@ -1,4 +1,10 @@
 ---
+- name: Ensure git is present (required to clone Oh My Zsh)
+  become: true
+  ansible.builtin.package:
+    name: git
+    state: present
+
 - name: Clone Oh My Zsh
   ansible.builtin.git:
     repo: https://github.com/robbyrussell/oh-my-zsh.git

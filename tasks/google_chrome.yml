@@ -1,18 +1,13 @@
 ---
-- name: Add Google Chrome repository
+- name: Import Google Chrome GPG key
   become: true
-  ansible.builtin.yum_repository:
-    name: google-chrome
-    description: Google Chrome Repository
-    baseurl: https://dl.google.com/linux/chrome/rpm/stable/x86_64
-    enabled: true
-    gpgcheck: true
-    gpgkey: https://dl-ssl.google.com/linux/linux_signing_key.pub
-    skip_if_unavailable: true
+  ansible.builtin.rpm_key:
+    key: https://dl.google.com/linux/linux_signing_key.pub
+    state: present
 
 - name: Install Google Chrome
   become: true
   ansible.builtin.dnf:
-    name: google-chrome-stable
+    name: https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
     state: present
-    update_cache: true
+    disable_gpg_check: false
