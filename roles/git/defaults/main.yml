@@ -1,6 +1,6 @@
 ---
-git_personal_conf: "~/.gitconfig.personal"
-git_professional_conf: "~/.gitconfig.professional"
+git_personal_conf: "{{ ansible_facts['user_dir'] }}/.gitconfig.personal"
+git_professional_conf: "{{ ansible_facts['user_dir'] }}/.gitconfig.professional"
 
 git_editor: "vim"
 git_fullname: "Fullname"

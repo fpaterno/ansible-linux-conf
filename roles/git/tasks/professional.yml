@@ -1,11 +1,11 @@
 ---
-- name: Create personal project directory
+- name: Create professional project directory
   ansible.builtin.file:
-    path: "~/Projects/professional"
+    path: "{{ ansible_facts['user_dir'] }}/Projects/professional"
     state: directory
     mode: '0755'
 
-- name: Configure personal git user parameters
+- name: Configure professional git user parameters
   community.general.git_config:
     name: "user.{{ item.name }}"
     value: "{{ item.value }}"
