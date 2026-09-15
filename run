@@ -19,6 +19,7 @@ declare -A SINGLE_ROLES=(
   ["chrome"]="Install Google Chrome"
   ["vscode"]="Install Visual Studio Code"
   ["docker"]="Install & configure Docker"
+  ["tools"]="Install others tools (tldr)"
 )
 
 usage() {

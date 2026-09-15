@@ -1,0 +1,6 @@
+---
+- name: Install tldr tool
+  become: true
+  ansible.builtin.package:
+    name: tldr
+    state: present
