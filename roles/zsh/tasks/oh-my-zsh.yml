@@ -32,7 +32,7 @@
   ansible.builtin.lineinfile:
     path: "{{ zsh_rc_file }}"
     regexp: ^plugins=
-    line: plugins=(zsh-syntax-highlighting zsh-autosuggestions nvm sudo)
+    line: plugins=(zsh-syntax-highlighting zsh-autosuggestions nvm sudo fzf)
 
 - name: Activate nvm autoload
   ansible.builtin.lineinfile:
