@@ -17,7 +17,6 @@
       ansible.builtin.import_tasks: tasks/ssh_key.yml
       tags: ['ssh', 'minimal']
 
-
     - name: Import zsh tasks
       ansible.builtin.import_role:
         name: zsh
@@ -52,6 +51,10 @@
     - name: Import Google Chrome tasks
       ansible.builtin.import_tasks: tasks/google_chrome.yml
       tags: ['chrome']
+
+    - name: Import others tools
+      ansible.builtin.import_tasks: tasks/tools.yml
+      tags: ['tools']
 
   roles:
     - role: git

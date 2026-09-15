@@ -41,20 +41,21 @@ $ ./run
 
 ## Included roles
 
-This setup is designed for both Fedora (workstations) and Debian (servers). Note that roles are targeted by playbooks based on host groups, so not all roles run on every environment:
+Tasks are structured into **Common** (applied to all hosts) and **Workstation** (applied to `workstations` group on Fedora):
 
-- [Vim](https://www.vim.org/)
-- [Zsh](https://www.zsh.org/) with [Oh My Zsh](https://ohmyz.sh/) framework
-- [Node Version Manager](https://github.com/nvm-sh/nvm) (nvm)
-- [Google Chrome](https://www.google.com/intl/fr_fr/chrome/)
-- [Visual Studio Code](https://code.visualstudio.com/)
-- [Docker](https://www.docker.com/)
-- [OpenSSH](https://www.openssh.com/) public and private key generation
-- [Git](https://git-scm.com/) with custom aliases, global configuration, and workspace management under `~/Projects`
+### Common Base
+- **Security:** [OpenSSH](https://www.openssh.com/) public and private key generation
+- **Shell:** Base [Zsh](https://www.zsh.org/) installation
+- **Editor:** [Vim](https://www.vim.org/)
 
-    Git identity is managed for 2 distinct environments:
-    - Personal configuration loaded by default
-    - Professional configuration automatically scoped when repositories are inside dedicated work folders
+### Workstation Specific (Fedora)
+- **Enhanced Shell:** [Oh My Zsh](https://ohmyz.sh/) framework, [Powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, and [fzf](https://github.com/junegunn/fzf) integration
+- **Version Control:** [Git](https://git-scm.com/) with custom aliases, global configuration, and workspace management under `~/Projects`
+  - Personal configuration loaded by default
+  - Professional configuration automatically scoped when repositories are inside dedicated work folders
+- **Development & Containers:** [nvm](https://github.com/nvm-sh/nvm) & [Docker](https://www.docker.com/)
+- **Applications:** [Google Chrome](https://www.google.com/chrome/) & [Visual Studio Code](https://code.visualstudio.com/)
+- **CLI Tools:** Standalone utilities like [tldr](https://tldr.sh/)
 
 ## Extra configuration
 
