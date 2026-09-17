@@ -5,6 +5,7 @@
     name:
       - zsh
       - fzf
+      - zoxide
     state: present
 
 - name: "Set zsh to default shell for user {{ ansible_facts['user_id'] }}"
