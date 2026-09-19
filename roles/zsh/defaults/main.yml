@@ -1,5 +1,5 @@
 ---
-zsh_enable_omz: false
+zsh_enable_plugins: false
 
 zsh_rc_file: "{{ ansible_facts['user_dir'] }}/.zshrc"
 zsh_omz_dir: "{{ ansible_facts['user_dir'] }}/.oh-my-zsh"

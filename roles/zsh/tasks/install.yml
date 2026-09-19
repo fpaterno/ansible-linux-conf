@@ -1,11 +1,8 @@
 ---
-- name: Install zsh and base CLI tools
+- name: Install zsh
   become: true
   ansible.builtin.package:
-    name:
-      - zsh
-      - fzf
-      - zoxide
+    name: zsh
     state: present
 
 - name: "Set zsh to default shell for user {{ ansible_facts['user_id'] }}"

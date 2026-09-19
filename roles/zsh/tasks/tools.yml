@@ -1,0 +1,8 @@
+---
+- name: Install base CLI tools
+  become: true
+  ansible.builtin.package:
+    name:
+      - fzf
+      - zoxide
+    state: present
