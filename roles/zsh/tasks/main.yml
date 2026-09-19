@@ -2,10 +2,14 @@
 - name: Import base zsh installation tasks
   ansible.builtin.import_tasks: install.yml
 
+- name: Import CLI tools tasks
+  ansible.builtin.import_tasks: tools.yml
+  when: zsh_enable_plugins | bool
+
 - name: Import Oh My Zsh setup tasks
   ansible.builtin.import_tasks: oh-my-zsh.yml
-  when: zsh_enable_omz | bool
+  when: zsh_enable_plugins | bool
 
 - name: Import Powerlevel10k setup tasks
   ansible.builtin.import_tasks: powerlevel10k.yml
-  when: zsh_enable_omz | bool
+  when: zsh_enable_plugins | bool

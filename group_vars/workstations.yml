@@ -1,2 +1,2 @@
 vim_enable_plugins: true
-zsh_enable_omz: true
+zsh_enable_plugins: true
