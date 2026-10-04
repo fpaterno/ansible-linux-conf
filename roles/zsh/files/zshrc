@@ -1,0 +1,105 @@
+# ==============================================================================
+# 1. ZINIT PLUGIN MANAGER INITIALIZATION
+# ==============================================================================
+
+# Automatically install Zinit if not present
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+# Load Zinit
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Unbind Zinit's 'zi' alias to avoid collision with Zoxide's interactive mode
+unalias zi 2>/dev/null
+
+# Automatic weekly plugin updates (interval in days)
+zstyle ':zinit' auto-update YES
+zstyle ':zinit' auto-update-interval 7
+
+
+# ==============================================================================
+# 2. ENVIRONMENT VARIABLES, COMPLETION & HISTORY CONFIGURATION
+# ==============================================================================
+
+# Prevent Atuin from binding to UP arrow globally
+export ATUIN_NOBIND="true"
+
+# Initialize Zsh completion system (required for fzf-tab)
+autoload -Uz compinit
+compinit -d "$HOME/.zcompdump"
+
+# Case-insensitive and accent-insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Zàâäéèêëîïôöùûüç}={A-Za-ZÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# History file settings
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=100000
+
+# History behavior options
+setopt HIST_FCNTL_LOCK
+setopt HIST_IGNORE_DUPS          # Do not record consecutive duplicate entries
+setopt HIST_IGNORE_SPACE         # Ignore commands starting with a space
+setopt SHARE_HISTORY             # Share history across all active terminal sessions
+setopt APPEND_HISTORY            # Append to history file instead of overwriting
+
+# Key bindings
+autoload -Uz zsh/terminfo
+[[ -n "$terminfo[kdch1]" ]] && bindkey "$terminfo[kdch1]" delete-char
+
+
+# ==============================================================================
+# 3. ZINIT PLUGINS & SNIPPETS
+# ==============================================================================
+
+# History-based auto-suggestions
+zinit light zsh-users/zsh-autosuggestions
+
+# OMZ sudo snippet (double ESC to insert sudo)
+zinit snippet OMZP::sudo
+
+# Advanced fuzzy completion menu (must be loaded BEFORE syntax-highlighting)
+zinit light Aloxaf/fzf-tab
+
+# Command syntax highlighting (MUST be loaded last among Zinit plugins)
+zinit light zsh-users/zsh-syntax-highlighting
+
+
+# ==============================================================================
+# 4. CLI TOOLS INITIALIZATION
+# ==============================================================================
+
+# Fast Node Manager (Fast Node.js switcher with auto .nvmrc detection)
+export PATH="$HOME/.local/share/fnm:$PATH"
+if command -v fnm &>/dev/null; then
+    eval "$(fnm env --use-on-cd)"
+fi
+
+# Bat (cat replacement)
+if command -v bat &>/dev/null; then
+    alias cat="bat --style=plain"
+    alias preview="bat --style=numbers,changes"
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+    export BAT_PAGER="less -RF --mouse"
+    export BAT_THEME="TwoDark"
+fi
+
+# Initialize Zoxide (smarter cd)
+eval "$(zoxide init zsh)"
+
+# Initialize Atuin (SQLite history with timestamps)
+if command -v atuin &>/dev/null; then
+    eval "$(atuin init zsh)"
+    bindkey '^r' _atuin_search_widget
+fi
+
+# Initialize Starship prompt
+eval "$(starship init zsh)"
+

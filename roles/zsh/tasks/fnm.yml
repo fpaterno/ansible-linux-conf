@@ -1,0 +1,13 @@
+---
+- name: Check if fnm is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['user_dir'] }}/.local/share/fnm/fnm"
+  register: zsh_fnm_check
+
+- name: Install FNM
+  when: not zsh_fnm_check.stat.exists
+  ansible.builtin.shell:
+    cmd: set -o pipefail && curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+    executable: /bin/bash
+    creates: "{{ ansible_facts['user_dir'] }}/.local/share/fnm/fnm"
+  changed_when: true

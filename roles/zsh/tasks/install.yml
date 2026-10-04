@@ -10,3 +10,9 @@
   ansible.builtin.user:
     name: "{{ ansible_facts['user_id'] }}"
     shell: /usr/bin/zsh
+
+- name: Deploy .zshrc
+  ansible.builtin.copy:
+    src: zshrc
+    dest: "{{ ansible_facts['user_dir'] }}/.zshrc"
+    mode: '0644'

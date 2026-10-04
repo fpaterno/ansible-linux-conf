@@ -4,12 +4,12 @@
 
 - name: Import CLI tools tasks
   ansible.builtin.import_tasks: tools.yml
-  when: zsh_enable_plugins | bool
 
-- name: Import Oh My Zsh setup tasks
-  ansible.builtin.import_tasks: oh-my-zsh.yml
-  when: zsh_enable_plugins | bool
+- name: Import Starship setup tasks
+  ansible.builtin.import_tasks: starship.yml
 
-- name: Import Powerlevel10k setup tasks
-  ansible.builtin.import_tasks: powerlevel10k.yml
-  when: zsh_enable_plugins | bool
+- name: Import Atuin setup tasks
+  ansible.builtin.import_tasks: atuin.yml
+
+- name: Import fnm setup tasks
+  ansible.builtin.import_tasks: fnm.yml

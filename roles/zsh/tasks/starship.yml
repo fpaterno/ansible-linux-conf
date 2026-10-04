@@ -1,0 +1,27 @@
+---
+- name: Check if starship is installed
+  ansible.builtin.command: which starship
+  register: zsh_starship_check
+  failed_when: false
+  changed_when: false
+
+- name: Install Starship
+  when: zsh_starship_check.rc != 0
+  ansible.builtin.shell:
+    cmd: set -o pipefail && curl -sS https://starship.rs/install.sh | sh -s -- -y
+    executable: /bin/bash
+    creates: /usr/local/bin/starship
+  become: true
+  changed_when: true
+
+- name: Ensure ~/.config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['user_dir'] }}/.config"
+    state: directory
+    mode: '0755'
+
+- name: Deploy starship.toml
+  ansible.builtin.copy:
+    src: starship.toml
+    dest: "{{ ansible_facts['user_dir'] }}/.config/starship.toml"
+    mode: '0644'
