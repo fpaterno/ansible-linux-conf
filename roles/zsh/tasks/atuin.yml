@@ -1,0 +1,6 @@
+---
+- name: Install Atuin
+  become: true
+  ansible.builtin.package:
+    name: atuin
+    state: present

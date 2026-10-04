@@ -45,17 +45,19 @@ Tasks are structured into **Common** (applied to all hosts) and **Workstation** 
 
 ### Common Base
 - **Security:** [OpenSSH](https://www.openssh.com/) public and private key generation
-- **Shell:** Base [Zsh](https://www.zsh.org/) installation
 - **Editor:** [Vim](https://www.vim.org/)
 
 ### Workstation Specific (Fedora)
-- **Enhanced Shell:** [Oh My Zsh](https://ohmyz.sh/) framework, [Powerlevel10k](https://github.com/romkatv/powerlevel10k) theme, and [fzf](https://github.com/junegunn/fzf) integration
+- **Shell & Environment:**
+  - [Zsh](https://www.zsh.org/) shell with custom `.zshrc`
+  - [Starship](https://starship.rs/) cross-shell prompt
+  - [Atuin](https://atuin.sh/) magical shell history
+- **CLI Tools:** Modern terminal utilities including [fzf](https://github.com/junegunn/fzf), [zoxide](https://github.com/ajeetdsouza/zoxide), [bat](https://github.com/sharkdp/bat), and [tldr](https://tldr.sh/)
 - **Version Control:** [Git](https://git-scm.com/) with custom aliases, global configuration, and workspace management under `~/Projects`
   - Personal configuration loaded by default
   - Professional configuration automatically scoped when repositories are inside dedicated work folders
-- **Development & Containers:** [nvm](https://github.com/nvm-sh/nvm) & [Docker](https://www.docker.com/)
+- **Development & Containers:** [fnm](https://github.com/Schniz/fnm) & [Docker](https://www.docker.com/)
 - **Applications:** [Google Chrome](https://www.google.com/chrome/) & [Visual Studio Code](https://code.visualstudio.com/)
-- **CLI Tools:** Standalone utilities like [tldr](https://tldr.sh/)
 
 ## Extra configuration
 

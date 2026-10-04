@@ -17,11 +17,6 @@
       ansible.builtin.import_tasks: tasks/ssh_key.yml
       tags: ['ssh', 'minimal']
 
-    - name: Import zsh tasks
-      ansible.builtin.import_role:
-        name: zsh
-      tags: ['zsh']
-
     - name: Import vim tasks
       ansible.builtin.import_role:
         name: vim
@@ -55,6 +50,11 @@
     - name: Import others tools
       ansible.builtin.import_tasks: tasks/tools.yml
       tags: ['tools']
+
+    - name: Import zsh tasks
+      ansible.builtin.import_role:
+        name: zsh
+      tags: ['zsh']
 
   roles:
     - role: git
