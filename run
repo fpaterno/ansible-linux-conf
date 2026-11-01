@@ -15,7 +15,6 @@ declare -A SINGLE_ROLES=(
   ["git"]="Install & configure Git"
   ["vim"]="Install & configure Vim"
   ["zsh"]="Install & configure Zsh"
-  ["nvm"]="Install & configure NVM"
   ["chrome"]="Install Google Chrome"
   ["vscode"]="Install Visual Studio Code"
   ["docker"]="Install & configure Docker"

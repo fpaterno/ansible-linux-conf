@@ -1,3 +1,4 @@
+---
 - name: Common base configuration
   hosts: all
 
@@ -12,14 +13,11 @@
         fail_msg: "You must update Ansible to at least 2.15 to use this setup."
       tags: ['always']
 
-  tasks:
-    - name: Import SSH key tasks
-      ansible.builtin.import_tasks: tasks/ssh_key.yml
+  roles:
+    - role: ssh_key
       tags: ['ssh', 'minimal']
 
-    - name: Import vim tasks
-      ansible.builtin.import_role:
-        name: vim
+    - role: vim
       tags: ['vim', 'minimal']
 
 - name: Workstation base configuration
@@ -38,24 +36,6 @@
         fail_msg: "This workstation playbook is explicitly designed for Fedora."
       tags: ['always']
 
-  tasks:
-    - name: Import NVM tasks
-      ansible.builtin.import_tasks: tasks/nvm.yml
-      tags: ['nvm']
-
-    - name: Import Google Chrome tasks
-      ansible.builtin.import_tasks: tasks/google_chrome.yml
-      tags: ['chrome']
-
-    - name: Import others tools
-      ansible.builtin.import_tasks: tasks/tools.yml
-      tags: ['tools']
-
-    - name: Import zsh tasks
-      ansible.builtin.import_role:
-        name: zsh
-      tags: ['zsh']
-
   roles:
     - role: git
       tags: ['git', 'minimal']
@@ -65,3 +45,12 @@
 
     - role: docker
       tags: ['docker']
+
+    - role: google_chrome
+      tags: ['chrome']
+
+    - role: tools
+      tags: ['tools']
+
+    - role: zsh
+      tags: ['zsh']

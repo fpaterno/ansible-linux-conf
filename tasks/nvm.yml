@@ -1,7 +1,0 @@
----
-- name: Install nvm {{ nvm_version }}
-  ansible.builtin.git:
-    repo: https://github.com/nvm-sh/nvm.git
-    dest: "{{ ansible_facts['user_dir'] }}/.nvm"
-    version: "{{ nvm_version }}"
-    depth: 1
