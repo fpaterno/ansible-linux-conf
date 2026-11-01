@@ -3,6 +3,10 @@ vim_enable_plugins: false
 
 vim_dir: "{{ ansible_facts['user_dir'] }}/.vim"
 vim_rc_file: "{{ ansible_facts['user_dir'] }}/.vimrc"
+
+vim_plugin_versions:
+  airline: "v0.12"
+
 vim_plugins:
   - name: vim-airline
     repo: https://github.com/vim-airline/vim-airline.git

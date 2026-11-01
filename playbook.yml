@@ -3,7 +3,6 @@
   hosts: all
 
   vars_files:
-    - default.config.yml
     - config.yml
 
   pre_tasks:
@@ -24,7 +23,6 @@
   hosts: workstations
 
   vars_files:
-    - default.config.yml
     - config.yml
 
   pre_tasks:
@@ -35,6 +33,18 @@
           - ansible_facts['distribution'] == 'Fedora'
         fail_msg: "This workstation playbook is explicitly designed for Fedora."
       tags: ['always']
+
+    - name: Verify this workstation defines its own Git identity
+      ansible.builtin.assert:
+        that:
+          - git_fullname is defined
+          - git_personal_email is defined
+          - git_professional_email is defined
+        fail_msg: >-
+          No Git identity found for this workstation. Copy config.yml.example to
+          config.yml, then uncomment and fill in git_fullname, git_personal_email
+          and git_professional_email.
+      tags: ['git', 'minimal']
 
   roles:
     - role: git

@@ -1,0 +1,16 @@
+---
+# Per-workstation configuration.
+#
+# Copy this file to config.yml (git-ignored, one copy per workstation), then
+# uncomment and fill in every value below.
+#
+# This template is NOT loaded by the playbook: config.yml is the only source of
+# truth at run time. An absent or incomplete config.yml therefore stops the run
+# with an explicit message, instead of silently applying these placeholders.
+#
+# For the full description of each variable:
+#   ./run doc git
+
+# git_fullname: "Your Full Name"
+# git_personal_email: "you@personal.example"
+# git_professional_email: "you@work.example"

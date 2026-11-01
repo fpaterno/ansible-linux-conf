@@ -1,0 +1,52 @@
+---
+argument_specs:
+  main:
+    short_description: Install Git, deploy shared aliases and split personal/professional identities
+    description:
+      - Installs the git package.
+      - Creates the C(~/Projects/personal) and C(~/Projects/professional) workspaces.
+      - >-
+        Writes two identity files and deploys a C(~/.gitconfig) that includes the
+        personal one by default, and the professional one for repositories located
+        under a C(professional/) directory.
+      - >-
+        That same C(~/.gitconfig) also carries a set of shorthand aliases, sets Vim
+        as the commit editor and disables the pager for C(git branch). Its content is
+        fixed in C(files/gitconfig) and is not driven by variables; an existing file
+        is backed up before being replaced.
+    author:
+      - Florent Paterno
+    options:
+      git_fullname:
+        type: str
+        required: true
+        description:
+          - Value of C(user.name), written to both identity files.
+      git_personal_email:
+        type: str
+        required: true
+        description:
+          - Value of C(user.email) for repositories outside C(~/Projects/professional).
+      git_professional_email:
+        type: str
+        required: true
+        description:
+          - Value of C(user.email) for repositories under C(~/Projects/professional).
+      git_personal_conf:
+        type: path
+        required: false
+        description:
+          - Absolute path of the personal identity file.
+          - >-
+            Defaults to C(.gitconfig.personal) in the user home directory, as set in
+            C(defaults/main.yml). Overriding it also requires editing the C([include])
+            section of C(files/gitconfig), which hardcodes the same path.
+      git_professional_conf:
+        type: path
+        required: false
+        description:
+          - Absolute path of the professional identity file.
+          - >-
+            Defaults to C(.gitconfig.professional) in the user home directory, as set
+            in C(defaults/main.yml). Overriding it also requires editing the
+            C([includeIf]) section of C(files/gitconfig), which hardcodes the same path.

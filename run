@@ -21,10 +21,22 @@ declare -A SINGLE_ROLES=(
   ["tools"]="Install others tools (tldr)"
 )
 
+# Role directory, for the roles whose name differs from their tag
+declare -A ROLE_DIRS=(
+  ["ssh"]="ssh_key"
+  ["chrome"]="google_chrome"
+)
+
+# Roles covered by a global target, when it is not all of them
+declare -A GLOBAL_MEMBERS=(
+  ["minimal"]="ssh vim git"
+)
+
 usage() {
-  echo -e "\033[33mUsage:\033[0m ./run [inspect|list|setup] [role]"
+  echo -e "\033[33mUsage:\033[0m ./run [doc|inspect|list|setup] [role]"
   echo ""
   echo -e "\033[33mCommands:\033[0m"
+  echo "  doc     <role>  Show the variables the role accepts, with their type"
   echo "  inspect <role>  Preview changes (--check --diff)"
   echo "  list    <role>  List tasks executed by the role"
   echo "  setup   <role>  Apply configuration"
@@ -39,6 +51,22 @@ usage() {
     printf "  \033[32m%-20s\033[0m %s\n" "$role" "${SINGLE_ROLES[$role]}"
   done
   exit 1
+}
+
+# Print the argument spec of a single role, or say why there is none.
+# ansible-doc stays silent and returns 0 on an undocumented role, so the
+# presence of the spec file is checked explicitly.
+show_doc() {
+  local tag="$1"
+  local dir="${ROLE_DIRS[$tag]:-$tag}"
+
+  if [[ ! -f "roles/${dir}/meta/argument_specs.yml" ]]; then
+    echo -e "\033[33mRole '${tag}' documents no variable yet.\033[0m"
+    echo "Describe its inputs in roles/${dir}/meta/argument_specs.yml to populate this output."
+    return 1
+  fi
+
+  ansible-doc -t role "$dir"
 }
 
 ACTION="${1:-}"
@@ -65,6 +93,15 @@ if [[ "$ROLE" != "global" ]]; then
 fi
 
 case "$ACTION" in
+  doc)
+    if [[ -n "${GLOBAL_ROLES[$ROLE]:-}" ]]; then
+      for role in ${GLOBAL_MEMBERS[$ROLE]:-${!SINGLE_ROLES[@]}}; do
+        show_doc "$role" || true
+      done
+    else
+      show_doc "$ROLE"
+    fi
+    ;;
   inspect)
     ansible-playbook -i "$INVENTORY" "$PLAYBOOK" "${TAG_ARGS[@]}" --ask-become-pass --check --diff
     ;;

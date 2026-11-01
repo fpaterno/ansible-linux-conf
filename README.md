@@ -16,13 +16,15 @@ $ sudo dnf install ansible
 
 ## Configuration
 
-To customize user settings (such as Git identity, SSH options, or default paths), copy the example configuration file and override variables as needed:
+User settings (Git identity, default paths) are defined **per workstation** in a local `config.yml`, which is git-ignored so each machine keeps its own. Create it from the tracked template:
 
 ```shell
-$ cp default.config.yml config.yml
+$ cp config.yml.example config.yml
 ```
 
-Edit config.yml with your own personal and professional settings before running any setup tasks.
+Then uncomment and fill in every value before running any setup task.
+
+> **Note:** `config.yml` is the only variable file loaded at run time. A missing or incomplete one stops the playbook with an explicit message, rather than silently applying placeholder values to your Git identity.
 
 ## CLI Interface
 A dependency-free Bash script serves as the main entry point to inspect, list, and apply Ansible configurations without polluting system paths.
@@ -33,6 +35,7 @@ To display all available commands and roles:
 $ ./run
 ```
 
+* **`doc <role>`** : Display the variables the role accepts, with their type and description.
 * **`inspect <role>`** : Preview execution changes without modifying the system (`--check --diff`).
 * **`list <role>`** : Display the list of Ansible tasks executed by the specified role.
 * **`setup <role>`** : Apply the configuration to the local system.
