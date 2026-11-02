@@ -13,7 +13,7 @@
       tags: ['always']
 
   roles:
-    - role: ssh_key
+    - role: ssh
       tags: ['ssh', 'minimal']
 
     - role: vim
@@ -56,7 +56,7 @@
     - role: docker
       tags: ['docker']
 
-    - role: google_chrome
+    - role: chrome
       tags: ['chrome']
 
     - role: tools

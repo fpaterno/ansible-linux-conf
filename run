@@ -21,12 +21,6 @@ declare -A SINGLE_ROLES=(
   ["tools"]="Install others tools (tldr)"
 )
 
-# Role directory, for the roles whose name differs from their tag
-declare -A ROLE_DIRS=(
-  ["ssh"]="ssh_key"
-  ["chrome"]="google_chrome"
-)
-
 # Roles covered by a global target, when it is not all of them
 declare -A GLOBAL_MEMBERS=(
   ["minimal"]="ssh vim git"
@@ -57,16 +51,15 @@ usage() {
 # ansible-doc stays silent and returns 0 on an undocumented role, so the
 # presence of the spec file is checked explicitly.
 show_doc() {
-  local tag="$1"
-  local dir="${ROLE_DIRS[$tag]:-$tag}"
+  local role="$1"
 
-  if [[ ! -f "roles/${dir}/meta/argument_specs.yml" ]]; then
-    echo -e "\033[33mRole '${tag}' documents no variable yet.\033[0m"
-    echo "Describe its inputs in roles/${dir}/meta/argument_specs.yml to populate this output."
+  if [[ ! -f "roles/${role}/meta/argument_specs.yml" ]]; then
+    echo -e "\033[33mRole '${role}' documents no variable yet.\033[0m"
+    echo "Describe its inputs in roles/${role}/meta/argument_specs.yml to populate this output."
     return 1
   fi
 
-  ansible-doc -t role "$dir"
+  ansible-doc -t role "$role"
 }
 
 ACTION="${1:-}"
