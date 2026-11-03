@@ -1,0 +1,15 @@
+---
+argument_specs:
+  main:
+    short_description: Create the user SSH directory and an ED25519 key pair
+    description:
+      - Creates C(~/.ssh) with mode C(0700).
+      - >-
+        Generates an ED25519 key pair at C(~/.ssh/id_ed25519) when it is absent,
+        with mode C(0600). An existing key is left untouched.
+      - >-
+        The path, the key type and the permissions are fixed in the tasks, so the
+        role takes no variable. Change them in C(tasks/main.yml) if needed.
+      - Requires the C(community.crypto) collection, pinned in C(requirements.yml).
+    author:
+      - Florent Paterno
