@@ -1,31 +1,44 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Every path below is relative to the repository root, so go there whatever the
+# caller's current directory is. readlink -f also resolves a symlinked ./run.
+cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+
 INVENTORY="inventory"
 PLAYBOOK="playbook.yml"
 
-# Roles declaration and their descriptions
+# Global targets are tags of the playbook: ansible resolves their members itself,
+# so there is nothing to list here.
 declare -A GLOBAL_ROLES=(
   ["global"]="Execute all roles"
-  ["minimal"]="Execute only ssh, vim & git roles"
+  ["minimal"]="Execute only the ssh, vim & git roles"
 )
 
-declare -A SINGLE_ROLES=(
+# One line per role, for the help screen only. A role missing from this table
+# still works; it simply shows up without a description.
+declare -A ROLE_DESCRIPTIONS=(
   ["ssh"]="Generate public and private SSH keys (ED25519)"
   ["git"]="Install & configure Git"
   ["vim"]="Install & configure Vim"
   ["zsh"]="Install & configure Zsh"
   ["chrome"]="Install Google Chrome"
   ["vscode"]="Install Visual Studio Code"
-  ["docker"]="Install & configure Docker"
-  ["tools"]="Install others tools (tldr)"
+  ["docker"]="Install Docker Engine, CLI and plugins"
+  ["tools"]="Install other tools (tldr)"
 )
 
-# Roles covered by a global target, when it is not all of them
-declare -A GLOBAL_MEMBERS=(
-  ["minimal"]="ssh vim git"
-)
+# The set of roles is the set of directories under roles/, so adding or renaming
+# a role needs no change here.
+declare -A SINGLE_ROLES=()
+for dir in roles/*/; do
+  [[ -d "$dir" ]] || continue
+  dir="${dir%/}"
+  SINGLE_ROLES["${dir##*/}"]=1
+done
 
+# Print the help text on stdout, without deciding anything: the callers below
+# pick the exit status, since asking for help is not the same as misusing the CLI.
 usage() {
   echo -e "\033[33mUsage:\033[0m ./run [doc|inspect|list|setup] [role]"
   echo ""
@@ -36,14 +49,21 @@ usage() {
   echo "  setup   <role>  Apply configuration"
   echo ""
   echo -e "\033[33mGlobal roles:\033[0m"
-  for role in "${!GLOBAL_ROLES[@]}"; do
+  for role in $(printf '%s\n' "${!GLOBAL_ROLES[@]}" | sort); do
     printf "  \033[32m%-20s\033[0m %s\n" "$role" "${GLOBAL_ROLES[$role]}"
   done
   echo ""
   echo -e "\033[33mSpecific roles:\033[0m"
-  for role in "${!SINGLE_ROLES[@]}"; do
-    printf "  \033[32m%-20s\033[0m %s\n" "$role" "${SINGLE_ROLES[$role]}"
+  for role in $(printf '%s\n' "${!SINGLE_ROLES[@]}" | sort); do
+    printf "  \033[32m%-20s\033[0m %s\n" "$role" "${ROLE_DESCRIPTIONS[$role]:-}"
   done
+}
+
+# Wrong invocation: the error alone, plus where to find the usage. Printing the
+# whole help here would bury the one line that matters.
+usage_error() {
+  echo -e "\033[31mError:\033[0m $1" >&2
+  echo "Run './run --help' for usage." >&2
   exit 1
 }
 
@@ -54,8 +74,9 @@ show_doc() {
   local role="$1"
 
   if [[ ! -f "roles/${role}/meta/argument_specs.yml" ]]; then
-    echo -e "\033[33mRole '${role}' documents no variable yet.\033[0m"
-    echo "Describe its inputs in roles/${role}/meta/argument_specs.yml to populate this output."
+    echo -e "\033[33mRole '${role}' has no argument spec.\033[0m" >&2
+    echo "Roles taking no variable are described by ./run instead. Add" >&2
+    echo "roles/${role}/meta/argument_specs.yml if it gains inputs, or a caveat worth stating." >&2
     return 1
   fi
 
@@ -65,35 +86,37 @@ show_doc() {
 ACTION="${1:-}"
 ROLE="${2:-}"
 
-# Show usage if action or role is missing
-if [[ -z "$ACTION" || -z "$ROLE" ]]; then
+# Help explicitly asked for is a success.
+if [[ -z "$ACTION" || "$ACTION" == "-h" || "$ACTION" == "--help" ]]; then
   usage
+  exit 0
 fi
 
-# Role validation
-TAG_TARGET=""
-if [[ -n "${GLOBAL_ROLES[$ROLE]:-}" ]]; then
-  TAG_TARGET="$ROLE"
-elif [[ -n "${SINGLE_ROLES[$ROLE]:-}" ]]; then
-  TAG_TARGET="$ROLE"
-else
-  usage
+# An action given without a role is an incomplete command.
+if [[ -z "$ROLE" ]]; then
+  usage_error "command '$ACTION' needs a role."
 fi
 
+# The role must be either a global target or a directory under roles/.
+if [[ -z "${GLOBAL_ROLES[$ROLE]:-}" && -z "${SINGLE_ROLES[$ROLE]:-}" ]]; then
+  usage_error "unknown role '$ROLE'."
+fi
+
+# "global" means every role, so it takes no tag filter at all. Every other
+# target, "minimal" included, is a tag of the playbook.
 TAG_ARGS=()
 if [[ "$ROLE" != "global" ]]; then
-  TAG_ARGS=(--tags "$TAG_TARGET")
+  TAG_ARGS=(--tags "$ROLE")
 fi
 
 case "$ACTION" in
   doc)
+    # Dumping every role at once is unreadable, and ./run already lists them all
+    # with a one-line description, so documentation is per role only.
     if [[ -n "${GLOBAL_ROLES[$ROLE]:-}" ]]; then
-      for role in ${GLOBAL_MEMBERS[$ROLE]:-${!SINGLE_ROLES[@]}}; do
-        show_doc "$role" || true
-      done
-    else
-      show_doc "$ROLE"
+      usage_error "'doc' takes a single role, not the global target '$ROLE'."
     fi
+    show_doc "$ROLE"
     ;;
   inspect)
     ansible-playbook -i "$INVENTORY" "$PLAYBOOK" "${TAG_ARGS[@]}" --ask-become-pass --check --diff
@@ -105,6 +128,6 @@ case "$ACTION" in
     ansible-playbook -i "$INVENTORY" "$PLAYBOOK" "${TAG_ARGS[@]}" --list-tasks
     ;;
   *)
-    usage
+    usage_error "unknown command '$ACTION'."
     ;;
 esac
